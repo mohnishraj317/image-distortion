@@ -28,24 +28,22 @@ class Particle {
     // } else this.color = this.baseColor;
     this.draw(ctx);
     
-    const mouseDist = 10 / Math.hypot(
+    const md = Math.hypot(
       this.system.mouse.x - this.x,
       this.system.mouse.y - this.y
     );
     
     const theta = Math.atan2(
+      this.system.mouse.x - this.x,
       this.y - this.system.mouse.y,
-      this.system.mouse.x - this.x
     );
-    const speed = mouseDist;
-    const vx = mouseDist * Math.cos(theta);
-    const vy = mouseDist * Math.sin(theta);
+    
+    const speed = 1 / Math.log(md);
+    const vx = speed * Math.cos(theta);
+    const vy = speed * Math.sin(theta);
     
     this.x += vx;
     this.y += vy;
-    
-    // ctx.fillStyle = "white";
-    // ctx.fillText(i, this.x + this.size / 2 - 5, this.y + this.size / 2 + 4);
   }
 
   static create = (...args) => new Particle(...args);
@@ -56,7 +54,7 @@ class ParticleSystem {
     this.cnv = cnv;
     this.ctx = cnv.getContext("2d") 
     this.particles = [];
-    this.particleSize = ~~(this.cnv.width / 80);
+    this.particleSize = ~~(this.cnv.width / 60);
     this.mouse = mouse;
   }
   
@@ -119,7 +117,7 @@ class ParticleSystem {
   }
   
   animate() {
-    fillCtx(this.cnv, "#000");
+    fillCtx(this.cnv, "#0002");
     this.particles.forEach((particle, i) => {
       // if (this.selectParticles(globalMouse, 10).includes(particle))
       //   particle.color = "red";

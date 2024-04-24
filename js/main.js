@@ -9,17 +9,13 @@ addEventListener("load", () => {
     .catch(console.log);
 });
 
-addEventListener("touchstart", e => e.stopPropagation());
-
 addEventListener("mousemove", e => {
-  e.preventDefault();
   const [x, y] = getClientCoords(e);
   globalMouse.x = x;
   globalMouse.y = y;
 });
 
 addEventListener("touchmove", e => {
-  e.preventDefault();
   const [x, y] = getClientCoords(e);
   globalMouse.x = x;
   globalMouse.y = y;
