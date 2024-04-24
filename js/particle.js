@@ -56,7 +56,7 @@ class ParticleSystem {
     this.cnv = cnv;
     this.ctx = cnv.getContext("2d") 
     this.particles = [];
-    this.particleSize = ~~(this.cnv.width / 50);
+    this.particleSize = ~~(this.cnv.width / 70);
     this.mouse = mouse;
   }
   
