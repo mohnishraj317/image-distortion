@@ -1,13 +1,6 @@
 const globalMouse = {
   x : null, y : null
 };
-const particleSystem = new ParticleSystem(cnv, globalMouse);
-
-addEventListener("load", () => {
-  loadImg("./images/img.jpg")
-    .then(img => particleSystem.createParticlesFromImg(img))
-    .catch(console.log);
-});
 
 addEventListener("mousemove", e => {
   const [x, y] = getClientCoords(e);
@@ -21,4 +14,15 @@ addEventListener("touchmove", e => {
   globalMouse.y = y;
 });
 
-particleSystem.animate(0);
+const dummy = new Particle(
+  200, 200, 20, "royalblue"
+);
+
+(function animate() {
+  requestAnimationFrame(animate);
+  fillCtx(cnv, "#0002");
+  
+  Particle.particles.forEach(particle => {
+    particle.update(getctx(cnv));
+  });
+}());
