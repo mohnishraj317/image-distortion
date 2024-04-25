@@ -3,10 +3,16 @@ class Particle {
     this.x = x;
     this.y = y;
     this.base = {
-      x, y
+      x: x, y: y
     };
     this.size = size;
     this.color = color;
+    
+    this.vx = 0;
+    this.vy = 0;
+    this.maxSpeed = 20;
+    this.mass = innerHeight;
+    
     Particle.particles.push(this);
   }
   
@@ -34,15 +40,46 @@ class Particle {
     );
     
     const btheta = 2*Math.PI - Math.atan2(
-      this.y - globalMouse.y,
-      globalMouse.x - this.x,
+      this.y - this.base.y,
+      this.base.x - this.x,
     );
     
-    const speed = (Math.log(md)**2) / 10;
     const { cos, sin, atan, atan2 } = Math;
+    const that = this;
     
-    this.x += speed * cos(mtheta);
-    this.y += speed * sin(mtheta);
+    const ax = {
+      m: md*cos(mtheta),
+      b: bd*cos(btheta),
+      
+      get tot() {
+        return (this.m + this.b) / that.mass;
+      }
+    };
+    
+    const ay = {
+      m: md*sin(mtheta),
+      b: bd*sin(btheta),
+      
+      get tot() {
+        return (this.m + this.b) / that.mass;
+      }
+    };
+    
+    const theta = Math.atan2(ay.tot, ax.tot);
+    const speed = this.maxSpeed;
+    
+    const curSpeed = Math.hypot(this.vx, this.vy);
+    
+    if (curSpeed > speed) {
+      this.vx = speed*cos(theta);
+      this.vy = speed*sin(theta);
+    } else {
+      this.vx += ax.tot;
+      this.vy += ay.tot;
+    }
+    
+    this.x += this.vx;
+    this.y += this.vy;
     
     this.draw(ctx);
   }
