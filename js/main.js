@@ -21,7 +21,4 @@ addEventListener("touchmove", e => {
   globalMouse.y = y;
 });
 
-(function animate() {
-  requestAnimationFrame(animate);
-  particleSystem.animate();
-}());
+particleSystem.animate(0);
