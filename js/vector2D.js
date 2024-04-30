@@ -1,10 +1,15 @@
 class Vector {
   constructor(x, y) {
     this.x = x;
-    this.y = y;                                                 }
-                                                                get mag() {
-    return Math.hypot(this.x, this.y);                          }
-                                                                get angle() {                                                   return Math.atan2(this.y, this.x);
+    this.y = y;
+  }
+  
+  get mag() {
+    return Math.hypot(this.x, this.y);
+  }
+  
+  get angle() {
+    return Math.atan2(this.y, this.x);
   }
 
   add(vec) {

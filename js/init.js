@@ -14,6 +14,7 @@ const fillCtx = (cnv, color = "black") => {
   ctx.fillRect(0, 0, cnv.width, cnv.height);
   ctx.restore();
 }
+
 addEventListener("load", () => {
   resizeCanvas(cnv, innerHeight, innerWidth);
 });
