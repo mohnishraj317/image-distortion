@@ -1,11 +1,14 @@
 const globalMouse = {
   x : undefined, y : undefined
 };
+const cnv = document.querySelector(".cnv");
+
 const particleSystem = new ParticleSystem(cnv, globalMouse);
 
 addEventListener("load", () => {
+  resizeCanvas(cnv, innerHeight, innerWidth);
   loadImg("./images/img.jpg")
-    .then(img => particleSystem.createParticlesFromImg(img))
+    .then(img => particleSystem.start(img))
     .catch(console.log);
 });
 
@@ -21,4 +24,11 @@ addEventListener("touchmove", e => {
   globalMouse.y = y;
 });
 
-particleSystem.animate(0);
+addEventListener("touchend", () => {
+  globalMouse.x = undefined;
+  globalMouse.y = undefined;
+});
+
+addEventListener("resize", () => {
+  resizeCanvas(cnv, innerHeight, innerWidth);
+});

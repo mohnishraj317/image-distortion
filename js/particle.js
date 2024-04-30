@@ -1,23 +1,22 @@
 class Particle {
   constructor(color, x, y, size) {
     this.color = color;
-    this.baseColor = color;
+    this.size = size;
+    this.system = null;
+    this.mass = innerHeight + (Math.random() * (innerHeight / 2) - (innerHeight / 2));
+
     this.x = x;
     this.y = y;
     this.base = {x, y};
-    this.size = size;
-    this.system = null;
-    this.thresRadius = 20;
+    
     this.vx = 0;
     this.vy = 0;
-    this.maxSpeed = 12;
-    this.mass = innerHeight// + (Math.random() * (innerHeight / 2) - (innerHeight / 2));
-    
-    this.k = 2;
-    this.b = 50;
     
     this.ax = 0;
     this.ay = 0;
+    
+    this.k = 5;
+    this.b = 50;
     
     const that = this;
     
@@ -47,14 +46,16 @@ class Particle {
     let md = Math.hypot(
       globalMouse.x - this.x,
       globalMouse.y - this.y
-    );
-    
-    md = this.mass * 10 / md;
+    )/10;
     
     const mtheta = Math.PI + Math.atan2(
       globalMouse.y - this.y,
       globalMouse.x - this.x,
     );
+    
+    md = this.mass*10/(2*md+1);
+    // md = this.mass*cos(mtheta);
+    // md = this.mass*atan2(1, md);
     
     let bd = Math.hypot(
       this.base.x - this.x,
@@ -73,22 +74,14 @@ class Particle {
     const a = [
           [bd, btheta],
           [d, dtheta],
-          [md, mtheta]
+          [md || 0, mtheta || 0]
         ];
     
     this.ax = ~~a.map(arg => arg[0] * cos(arg[1])).reduce((a, b) => a + b, 0) / this.mass;
     this.ay = ~~a.map(arg => arg[0] * sin(arg[1])).reduce((a, b) => a + b, 0) / this.mass;
     
     const theta = Math.atan2(this.ay, this.ax);
-    
-    // if (curSpeed > speed) {
-    //   this.vx = speed*cos(theta);
-    //   this.vy = speed*sin(theta);
-    // } else {
-    //   this.vx += this.ax;
-    //   this.vy += this.ay;
-    // }
-    
+  
     this.vx += this.ax;
     this.vy += this.ay;
     
@@ -137,6 +130,14 @@ class ParticleSystem {
     this.particles = [];
     this.particleSize = ~~(this.cnv.width / 50);
     this.mouse = mouse;
+    this.currAnim = null;
+  }
+  
+  start(img) {
+    this.particles.length = 0;
+    this.createParticlesFromImg(img);
+    cancelAnimationFrame(this.currAnim);
+    this.animate(0);
   }
   
   addParticle(p) {
@@ -171,16 +172,10 @@ class ParticleSystem {
     this.ctx.restore();
   }
   
-  selectParticles(mouse, radius) {
-    const selected = [];
-    const i = ~~((mouse.x + mouse.y * this.cnv.width / this.particleSize) / this.particleSize);
-    selected.push(this.particles[i + 1]);
-    return selected;
-  }
-  
   animate(timestamp) {
     const that = this;
-    requestAnimationFrame(that.animate.bind(that));
+    this.currAnim = requestAnimationFrame(that.animate.bind(that));
+    
     fillCtx(this.cnv, "#000");
     this.particles.forEach((particle, i) => {
       particle.update(this.ctx, i);
