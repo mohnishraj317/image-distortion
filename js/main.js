@@ -8,6 +8,7 @@ const particleSystem = new ParticleSystem(cnv, globalMouse);
 
 addEventListener("load", () => {
   resizeCanvas(cnv, innerHeight, innerWidth);
+  
   loadImg("./images/img.jpg")
     .then(img => particleSystem.start(img))
     .catch(console.log);
