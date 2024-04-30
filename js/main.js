@@ -1,5 +1,5 @@
 const globalMouse = {
-  x : null, y : null
+  x : undefined, y : undefined
 };
 const particleSystem = new ParticleSystem(cnv, globalMouse);
 
