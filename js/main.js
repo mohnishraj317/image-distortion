@@ -1,8 +1,9 @@
 const globalMouse = {
-  x : undefined, y : undefined
+  x: undefined,
+  y: undefined
 };
-const cnv = document.querySelector(".cnv");
 
+const cnv = document.querySelector(".cnv");
 const particleSystem = new ParticleSystem(cnv, globalMouse);
 
 addEventListener("load", () => {

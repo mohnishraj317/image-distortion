@@ -17,16 +17,6 @@ class Particle {
     
     this.k = 5;
     this.b = 50;
-    
-    const that = this;
-    
-    this.vecs = {
-      vel: new Vector(that.vx, that.vy),
-      acc: new Vector(that.ax, that.ay),
-      d: new Vector(0, 0),
-      b: new Vector(0, 0),
-      m: new Vector(0, 0)
-    }
   }
   
   draw(ctx) {
@@ -88,35 +78,6 @@ class Particle {
     this.x += this.vx;
     this.y += this.vy;
     
-    Object.entries(this.vecs).forEach(([name, vec]) => {
-      switch (name) {
-        case "vel":
-          vec.x = that.vx * 10;
-          vec.y = that.vy * 10;
-          break;
-    
-        case "acc":
-          vec.x = that.ax * that.mass;
-          vec.y = that.ay * that.mass;
-          break;
-    
-        case "d":
-          vec.x = d * cos(dtheta);
-          vec.y = d * sin(dtheta);
-          break;
-    
-        case "b":
-          vec.x = bd * cos(btheta);
-          vec.y = bd * sin(btheta);
-          break;
-    
-        case "m":
-          vec.x = md * cos(mtheta);
-          vec.y = md * sin(mtheta);
-          break;
-      }
-    });
-    
     this.draw(ctx);
   }
 
@@ -175,8 +136,8 @@ class ParticleSystem {
   animate(timestamp) {
     const that = this;
     this.currAnim = requestAnimationFrame(that.animate.bind(that));
-    
     fillCtx(this.cnv, "#000");
+    
     this.particles.forEach((particle, i) => {
       particle.update(this.ctx, i);
     });
