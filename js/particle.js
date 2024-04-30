@@ -85,25 +85,6 @@ class ParticleSystem {
           ));
       }
     
-    // const view = new Uint32Array(data.buffer)
-    
-    // for (let i = 0; i < view.length; i += size) {
-    //   const x = (i+1) % this.cnv.width;
-    //   const y = i / this.cnv.width + 1;
-      
-    //   const a = (view[i]>>>(8*3)) / 255;
-    //   const b = (view[i]<<8)>>>(8*3);
-    //   const g = (view[i]<<(8*2))>>>(8*3);
-    //   const r = ((view[i]<<(8*3))>>>(8*3));
-      
-    //   if (a > 0)
-    //   this.addParticle(Particle.create(
-    //     `rgb(${r},${g},${b})`,
-    //     ~~x, ~~y,
-    //     10
-    //   ));
-    // }
-    
     this.ctx.restore();
   }
   
