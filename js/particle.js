@@ -43,7 +43,7 @@ class Particle {
       globalMouse.x - this.x,
     );
     
-    md = this.mass*10/(2*md+1);
+    md = this.mass*10/(2*md**2+1);
     // md = this.mass*cos(mtheta);
     // md = this.mass*atan2(1, md);
     
@@ -89,7 +89,7 @@ class ParticleSystem {
     this.cnv = cnv;
     this.ctx = cnv.getContext("2d") 
     this.particles = [];
-    this.particleSize = ~~(this.cnv.width / 50);
+    this.particleSize = ~~(this.cnv.width / 70);
     this.mouse = mouse;
     this.currAnim = null;
   }
